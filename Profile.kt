@@ -1,4 +1,4 @@
-package com.example.talestogether
+package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,10 +10,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,10 +30,10 @@ import androidx.compose.ui.unit.sp
 
 // Paleta pastel moderna
 private val PastelColorScheme = lightColorScheme(
-    primary = Color(0xFFB39DDB),
+    primary = Color(0xFFB39DDB),         // Roxo pastel
     onPrimary = Color.White,
-    secondary = Color(0xFF81D4FA),
-    onSecondary = Color.Black,
+    secondary = Color(0xFFB39DDB),       // Mantido roxo para consistência
+    onSecondary = Color.White,
     background = Color(0xFFFDFDFD),
     onBackground = Color.Black,
     surface = Color(0xFFEDE7F6),
@@ -39,21 +42,22 @@ private val PastelColorScheme = lightColorScheme(
 
 // Posts do pet
 val petPosts = listOf(
-    "Hoje brinquei no parque! 🐾",
-    "Dormir no sol é vida... ☀️😸",
-    "Aprendi um novo truque hoje! 🎾"
+    "Hoje brinquei no parque!",
+    "Dormir no sol é vida...",
+    "Aprendi um novo truque hoje!"
 )
 
 class Profile : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ProfileScreen()
+            MaterialTheme(colorScheme = PastelColorScheme) {
+                ProfileScreen()
+            }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen() {
     val context = LocalContext.current
@@ -120,21 +124,21 @@ fun ProfileScreen() {
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
-                // Dados do pet: idade e raça
+                // Dados do pet
                 Row(modifier = Modifier.padding(horizontal = 16.dp)) {
                     Chip(text = "3 anos", color = PastelColorScheme.primary)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Chip(text = "Golden Retriever", color = PastelColorScheme.secondary)
+                    Chip(text = "Golden Retriever", color = PastelColorScheme.primary)
                     Spacer(modifier = Modifier.width(8.dp))
                     OwnerChip(ownerName = "Mell Karine")
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Bio engraçadinha
+                // Bio
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                     Text(
-                        "Ama bolinhas 🎾, sonecas ao sol ☀️ e biscoitos de queijo 🧀.",
+                        "Ama bolinhas, sonecas ao sol e biscoitos de queijo.",
                         fontSize = 14.sp,
                         color = PastelColorScheme.onBackground
                     )
@@ -162,23 +166,47 @@ fun ProfileScreen() {
                     shape = RoundedCornerShape(12.dp),
                     elevation = CardDefaults.cardElevation(2.dp)
                 ) {
-                    Column(modifier = Modifier
-                        .background(PastelColorScheme.surface)
-                        .padding(12.dp)
+                    Column(
+                        modifier = Modifier
+                            .background(PastelColorScheme.surface)
+                            .padding(12.dp)
                     ) {
                         Text(postText, color = PastelColorScheme.onSurface)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Row {
-                            Button(onClick = { println("Curtido!") }, colors = ButtonDefaults.buttonColors(containerColor = PastelColorScheme.primary)) {
-                                Text("💜 Curtir", color = PastelColorScheme.onPrimary)
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Button(
+                                onClick = { println("Curtido!") },
+                                colors = ButtonDefaults.buttonColors(containerColor = PastelColorScheme.primary),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(Icons.Default.Favorite, contentDescription = "Curtir", tint = PastelColorScheme.onPrimary)
+                                Spacer(modifier = Modifier.width(4.dp))
                             }
+
                             Spacer(modifier = Modifier.width(8.dp))
-                            Button(onClick = { println("Comentado!") }, colors = ButtonDefaults.buttonColors(containerColor = PastelColorScheme.secondary)) {
-                                Text("💬 Comentar", color = PastelColorScheme.onSecondary)
+
+                            Button(
+                                onClick = { println("Comentado!") },
+                                colors = ButtonDefaults.buttonColors(containerColor = PastelColorScheme.primary),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(Icons.Default.MailOutline, contentDescription = "Comentar", tint = PastelColorScheme.onPrimary)
+                                Spacer(modifier = Modifier.width(4.dp))
                             }
+
                             Spacer(modifier = Modifier.width(8.dp))
-                            Button(onClick = { println("Repostado!") }, colors = ButtonDefaults.buttonColors(containerColor = PastelColorScheme.primary)) {
-                                Text("🔁 Repostar", color = PastelColorScheme.onPrimary)
+
+                            Button(
+                                onClick = { println("Repostado!") },
+                                colors = ButtonDefaults.buttonColors(containerColor = PastelColorScheme.primary),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(Icons.Default.Share, contentDescription = "Repostar", tint = PastelColorScheme.onPrimary)
+                                Spacer(modifier = Modifier.width(4.dp))
                             }
                         }
                     }
@@ -190,7 +218,7 @@ fun ProfileScreen() {
     }
 }
 
-// Composable para chip
+// Chip comum
 @Composable
 fun Chip(text: String, color: Color) {
     Box(
@@ -203,19 +231,19 @@ fun Chip(text: String, color: Color) {
     }
 }
 
-// Chip para dona do pet com ícone
+// Chip com ícone de dono
 @Composable
 fun OwnerChip(ownerName: String) {
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(PastelColorScheme.secondary.copy(alpha = 0.3f))
+            .background(PastelColorScheme.primary.copy(alpha = 0.3f))
             .padding(horizontal = 12.dp, vertical = 6.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.Person, contentDescription = "Dono(a)", tint = PastelColorScheme.secondary, modifier = Modifier.size(14.dp))
+            Icon(Icons.Default.Person, contentDescription = "Dono(a)", tint = PastelColorScheme.primary, modifier = Modifier.size(14.dp))
             Spacer(modifier = Modifier.width(4.dp))
-            Text(ownerName, color = PastelColorScheme.secondary, fontWeight = FontWeight.Medium, fontSize = 12.sp)
+            Text(ownerName, color = PastelColorScheme.primary, fontWeight = FontWeight.Medium, fontSize = 12.sp)
         }
     }
 }
