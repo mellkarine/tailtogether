@@ -1,4 +1,4 @@
-package com.example.talestogether
+package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -36,32 +39,28 @@ data class PetPost(
 )
 
 val posts = listOf(
-    PetPost("Luna", "Golden Retriever", 3, "Hoje brinquei no parque! 🐾", 12, 3, System.currentTimeMillis() - 600000),
-    PetPost("Mimi", "Gatinha Siamesa", 1, "Dormir no sol é vida... ☀️😸", 25, 5, System.currentTimeMillis() - 3600000),
-    PetPost("Rex", "Pastor Alemão", 4, "Aprendi um novo truque hoje! 🎾", 30, 7, System.currentTimeMillis() - 7200000),
-    PetPost("Thor", "Bulldog", 2, "Hora do banho... 😅", 8, 2, System.currentTimeMillis() - 1800000),
-    PetPost("Bella", "Labrador", 5, "Passeio na praia foi incrível! 🌊", 40, 10, System.currentTimeMillis() - 5400000)
+    PetPost("Luna", "Golden Retriever", 3, "Hoje brinquei no parque!", 12, 3, System.currentTimeMillis() - 600000),
+    PetPost("Mimi", "Gatinha Siamesa", 1, "Dormir no sol é vida...", 25, 5, System.currentTimeMillis() - 3600000),
+    PetPost("Rex", "Pastor Alemão", 4, "Aprendi um novo truque hoje!", 30, 7, System.currentTimeMillis() - 7200000),
+    PetPost("Thor", "Bulldog", 2, "Hora do banho...", 8, 2, System.currentTimeMillis() - 1800000),
+    PetPost("Bella", "Labrador", 5, "Passeio na praia foi incrível!", 40, 10, System.currentTimeMillis() - 5400000)
 )
 
-// Paleta pastel moderna
+// Paleta com roxo pastel
 private val PastelColorScheme = lightColorScheme(
-    primary = Color(0xFFB39DDB),        // Roxo pastel
+    primary = Color(0xFFB39DDB),
     onPrimary = Color.White,
-    secondary = Color(0xFF81D4FA),      // Azul pastel
-    onSecondary = Color.Black,
-    background = Color(0xFFFDFDFD),     // Fundo claro
+    background = Color(0xFFFDFDFD),
     onBackground = Color.Black,
-    surface = Color(0xFFEDE7F6),        // Cards
+    surface = Color(0xFFEDE7F6),
     onSurface = Color.Black
 )
 
-// Formata horário
 fun formatTime(timestamp: Long): String {
     val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
     return sdf.format(Date(timestamp))
 }
 
-// Card estilo Threads moderno pastel
 @Composable
 fun PostCard(post: PetPost) {
     Card(
@@ -71,9 +70,10 @@ fun PostCard(post: PetPost) {
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column(modifier = Modifier
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(12.dp)
+        Column(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(12.dp)
         ) {
             Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                 Box(
@@ -82,93 +82,98 @@ fun PostCard(post: PetPost) {
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.primary)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(Modifier.width(8.dp))
                 Column {
                     Text("${post.name}, ${post.age} anos", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-                    Text(post.breed, fontSize = 12.sp, color = MaterialTheme.colorScheme.secondary)
+                    Text(post.breed, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
                 }
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(Modifier.weight(1f))
                 Text(formatTime(post.timestamp), fontSize = 12.sp, color = Color.Gray)
             }
-            Spacer(modifier = Modifier.height(8.dp))
+
+            Spacer(Modifier.height(8.dp))
+
             Text(post.text, color = MaterialTheme.colorScheme.onSurface)
-            Spacer(modifier = Modifier.height(12.dp))
+
+            Spacer(Modifier.height(12.dp))
+
             Row {
-                Button(onClick = { println("Curtido ${post.name}") }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)) {
-                    Text("💜 ${post.likes}", color = MaterialTheme.colorScheme.onPrimary)
+                Button(
+                    onClick = { println("Curtido ${post.name}") },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {
+                    Icon(Icons.Default.Favorite, contentDescription = "Curtir", tint = MaterialTheme.colorScheme.onPrimary)
+                    Spacer(Modifier.width(4.dp))
+                    Text("${post.likes}", color = MaterialTheme.colorScheme.onPrimary)
                 }
-                Spacer(modifier = Modifier.width(8.dp))
-                Button(onClick = { println("Comentado ${post.name}") }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)) {
-                    Text("💬 Comentar", color = MaterialTheme.colorScheme.onSecondary)
+
+                Spacer(Modifier.width(8.dp))
+
+                Button(
+                    onClick = { println("Comentado ${post.name}") },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {
+                    Icon(Icons.Default.MailOutline, contentDescription = "Comentar", tint = MaterialTheme.colorScheme.onPrimary)
+                    Spacer(Modifier.width(4.dp))
+                    Text("Comentar", color = MaterialTheme.colorScheme.onPrimary)
                 }
-                Spacer(modifier = Modifier.width(8.dp))
-                Button(onClick = { println("Repostado ${post.name}") }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)) {
-                    Text("🔁 ${post.reposts}", color = MaterialTheme.colorScheme.onPrimary)
+
+                Spacer(Modifier.width(8.dp))
+
+                Button(
+                    onClick = { println("Repostado ${post.name}") },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {
+                    Icon(Icons.Default.Share, contentDescription = "Repostar", tint = MaterialTheme.colorScheme.onPrimary)
+                    Spacer(Modifier.width(4.dp))
+                    Text("${post.reposts}", color = MaterialTheme.colorScheme.onPrimary)
                 }
             }
         }
     }
 }
 
-// Feed rolável
 @Composable
 fun Feed(postList: List<PetPost>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
-        items(postList) { post ->
-            PostCard(post)
-        }
+        items(postList) { PostCard(it) }
     }
 }
 
-// Tela principal
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedScreen(openProfile: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("TailTogether 🐾") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = PastelColorScheme.primary
-                ),
+                title = { Text("TailTogether") },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = PastelColorScheme.primary),
                 actions = {
-                    IconButton(onClick = { openProfile() }) {
-                        Icon(
-                            Icons.Default.Person,
-                            contentDescription = "Perfil",
-                            tint = PastelColorScheme.onPrimary
-                        )
+                    IconButton(onClick = openProfile) {
+                        Icon(Icons.Default.Person, contentDescription = "Perfil", tint = PastelColorScheme.onPrimary)
                     }
                 }
             )
         },
         bottomBar = {
             BottomAppBar(containerColor = PastelColorScheme.primary) {
-                IconButton(onClick = { /* ação Home */ }) {
+                IconButton(onClick = {}) {
                     Icon(Icons.Default.Home, contentDescription = "Home", tint = PastelColorScheme.onPrimary)
                 }
             }
         }
-    ) { innerPadding ->
-        Feed(
-            postList = posts,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        )
+    ) { padding ->
+        Feed(posts, Modifier.fillMaxSize().padding(padding))
     }
 }
 
-// MainActivity
-@OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme(colorScheme = PastelColorScheme) {
                 FeedScreen(openProfile = {
-                    val intent = Intent(this, Profile::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, Profile::class.java))
                 })
             }
         }
