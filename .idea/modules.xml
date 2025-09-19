@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/talestogether/app/src/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/talestogether/app/src/androidTest/androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/talestogether/app/src/main/main.iml" filepath="$PROJECT_DIR$/talestogether/app/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/talestogether/app/build/intermediates/merged_manifest/debug/processDebugMainManifest/processDebugMainManifest.iml" filepath="$PROJECT_DIR$/talestogether/app/build/intermediates/merged_manifest/debug/processDebugMainManifest/processDebugMainManifest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/talestogether/app/build/intermediates/merged_manifests/debug/processDebugManifest/processDebugManifest.iml" filepath="$PROJECT_DIR$/talestogether/app/build/intermediates/merged_manifests/debug/processDebugManifest/processDebugManifest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/talestogether/app/build/intermediates/packaged_manifests/debug/processDebugManifestForPackage/processDebugManifestForPackage.iml" filepath="$PROJECT_DIR$/talestogether/app/build/intermediates/packaged_manifests/debug/processDebugManifestForPackage/processDebugManifestForPackage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/talestogether/app/src/test/test.iml" filepath="$PROJECT_DIR$/talestogether/app/src/test/test.iml" />
+    </modules>
+  </component>
+</project>

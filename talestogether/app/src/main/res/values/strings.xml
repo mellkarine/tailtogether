@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">talestogether</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_friendship">Friendship</string>
+    <string name="title_activity_components">Components</string>
+    <string name="title_activity_match">Match</string>
+    <string name="title_activity_owner_profile">OwnerProfile</string>
+</resources>
